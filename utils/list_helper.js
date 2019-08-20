@@ -51,9 +51,36 @@ const mostBlogs = (blogs) => {
   return maxBy(blogsList, bl => bl.blogs )
 }
 
+const mostLikes = (blogs) => {
+  const blogsList = []
+
+  blogs.forEach(blog => {
+    if(blogsList.some(tb => tb.author === blog.author)){
+      const blogger = blogsList.find(tb => tb.author === blog.author)
+      blogger.likes+=blog.likes
+    } else {
+      blogsList.push({
+        author: blog.author,
+        likes: blog.likes
+      })
+    }
+  })
+
+  const maxBy = (array, fn) => {
+    return array.map(function(x) {
+      return [x, fn(x)]
+    }).reduce(function(max, x) {
+      return x[1] > max[1] ? x : max;
+    })[0]
+  }
+
+  return maxBy(blogsList, bl => bl.likes )
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
