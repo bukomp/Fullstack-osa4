@@ -35,8 +35,7 @@ blogRouter.delete('/:id', async (req, res) => {
   const remove = await Blog.findByIdAndRemove(req.params.id)
 
   if(remove === null) res.status(404).json({error:"no data found"})
-
-  res.status(204).send()
+  else res.status(204).send()
 })
 
 blogRouter.put('/:id', async (req, res) => {
