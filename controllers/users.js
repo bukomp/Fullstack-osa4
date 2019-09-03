@@ -7,7 +7,7 @@ usersRouter.post('/', async (req, res, next) => {
     const body = req.body
     const dbCheck = await User.findOne({username: body.username})
     if(body.password === undefined || body.password.length < 3) res.status(400).json({error: "password must be at least 3 characters long"})
-    else if(body.username === undefined || body.username.length <3 0) res.status(400).json({error: "username must exist"})
+    else if(body.username === undefined || body.username.length < 3) res.status(400).json({error: "username must exist"})
     else if(dbCheck !== null) res.status(409).json({error: "user with particular username already exists"})
     else {
       const saltRounds = 10
