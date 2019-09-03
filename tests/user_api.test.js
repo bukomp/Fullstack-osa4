@@ -5,11 +5,34 @@ const api = supertest(app)
 
 describe('user api test', () => {
 
+  test('User with existing username can not be created', async () => {
+    const userExisting = {
+      name: "Existing",
+      password: "None",
+      username: "Existing"
+    }
+     await api.post('/api/users').send(userExisting).expect(409).expect("Content-Type", /application\/json/)
+  })
+
+  test("can't create users with malformed data", async () => {
+    const userMalformed = {
+      name: "Malformed",
+      password: "qw",
+      username: ""
+    }
+    const res = await api.post('/api/users')
+      .send(userMalformed)
+      .expect('Content-Type', /application\/json/)
+      .expect(400)
+    console.log(res.body);
+  })
+
   test('creation succeeds with a fresh username', async () => {
+    const rU = Math.random().toString(36).substring(2, 15);
     const user = {
-      username: "bukomp",
+      username: rU,
       password: "sekret",
-      name: "Edvard"
+      name: "unique_test"
     }
     const post = await api.post('/api/users')
       .send(user)
