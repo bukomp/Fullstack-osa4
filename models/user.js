@@ -15,7 +15,6 @@ const userSchema = mongoose.Schema({
 userSchema.set('toJSON', {
   transform: (document, rObj) => {
     rObj.id = rObj._id.toString()
-    delete rObj.blogs
     delete rObj._id
     delete rObj.__v
     delete rObj.passwordHash
